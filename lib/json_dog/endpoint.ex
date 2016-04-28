@@ -10,6 +10,7 @@ defmodule Dog.Endpoint do
   plug Plug.RequestId
   plug Plug.Logger
 
+  plug :copy_req_body
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
@@ -24,4 +25,20 @@ defmodule Dog.Endpoint do
     signing_salt: "GP4Mhe4N"
 
   plug Dog.Router
+
+  defp copy_req_body(conn, _) do
+    copy_body({:more, "", conn})
+  end
+
+  defp copy_body(read_body_response, result \\ "")
+
+  defp copy_body({:ok, body, conn}, result) do
+    Plug.Conn.put_private(conn, :raw_body, result <> body)
+  end
+
+  defp copy_body({:more, body, conn}, result) do
+    conn
+    |> Plug.Conn.read_body
+    |> copy_body(result <> body)
+  end
 end
