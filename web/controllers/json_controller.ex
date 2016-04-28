@@ -21,7 +21,7 @@ defmodule Dog.JSONController do
   def about(conn, _) do
     response = %{
       created_by: "@lukeledet",
-      repo: "https://github.com/lukeledet/json_dog",
+      repo: "https://github.com/lukeledet/json.dog",
       description: """
       json.dog was created for debugging all kinds of web requests. It's a
       free service that will remain free for.e.ver. If you think it's missing
