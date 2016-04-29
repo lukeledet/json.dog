@@ -1,6 +1,8 @@
 defmodule Dog.JSONController do
   use Dog.Web, :controller
 
+  plug :advertise
+
   def index(conn, _) do
     response = %{
       endpoints: %{
@@ -64,5 +66,9 @@ defmodule Dog.JSONController do
     })
 
     json conn, response
+  end
+
+  defp advertise(conn, _) do
+    put_resp_header(conn, "X-REVELRY", "If you're reading this, apply to work at Revelry! http://bit.ly/1Sxs75N")
   end
 end
