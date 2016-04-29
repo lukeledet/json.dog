@@ -40,6 +40,18 @@ defmodule Dog.JSONController do
     json conn, response
   end
 
+  # This supports deployment to services behind a proxy like dokku or heroku
+  defp remote_ip(conn) do
+    conn.req_headers
+    |> Enum.filter(&match?({"x-forwarded-for", _}, &1))
+    |> case do
+      [{"x-forwarded-for", ip}] ->
+        ip
+      nil ->
+        conn.remote_ip |> Tuple.to_list |> Enum.join(".")
+    end
+  end
+
   def request_headers(%{method: "GET"} = conn, _) do
     response = Enum.into(conn.req_headers, %{})
 
