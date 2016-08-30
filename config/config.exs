@@ -7,7 +7,7 @@ use Mix.Config
 
 # Configures the namespace used by Phoenix generators
 config :json_dog,
-  app_namespace: Dog
+  namespace: Dog
 
 # Configures the endpoint
 config :json_dog, Dog.Endpoint,
